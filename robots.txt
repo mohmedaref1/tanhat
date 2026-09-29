@@ -1,0 +1,21 @@
+# robots.txt for Tanhat Tourism & MMO
+# Domain: https://www.tanhattourism.com/
+
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/images/
+Allow: /assets/images/cars/
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# XML Sitemap Index
+Sitemap: https://www.tanhattourism.com/sitemap.xml

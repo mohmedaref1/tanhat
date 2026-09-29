@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="160" height="40" fill="none">
+  <!-- Modern geometric White Hills icon -->
+  <g stroke="#1E293B" stroke-width="1.2">
+    <path d="M 72 16 L 76 8 L 80 16 L 84 8 L 88 16" />
+  </g>
+  <text x="80" y="27" text-anchor="middle" font-family="'Cinzel', 'Segoe UI', serif" font-size="11" font-weight="700" fill="#1E293B" letter-spacing="3">WHITE HILLS</text>
+  <text x="80" y="36" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="6" font-weight="600" fill="#94A3B8" letter-spacing="2">RESORT</text>
+</svg>

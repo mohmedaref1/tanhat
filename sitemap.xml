@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Arabic Homepage (Primary) -->
+  <url>
+    <loc>https://www.tanhattourism.com/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tanhattourism.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.tanhattourism.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tanhattourism.com/"/>
+    
+    <!-- Key Assets for Google Images Ranking -->
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hero-bg.jpg</image:loc>
+      <image:title>تنهات للسياحة - حجز فنادق 5 نجوم وليموزين في مصر</image:title>
+      <image:caption>أفضل خدمات السياحة وحجز الفنادق والليموزين في شرم الشيخ ومصر</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-fourseasons.webp</image:loc>
+      <image:title>منتجع فور سيزونز شرم الشيخ</image:title>
+      <image:caption>حجز فندق فور سيزونز شرم الشيخ مع تنهات للسياحة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-rixos-sharm.jpg</image:loc>
+      <image:title>منتجع ريكسوس شرم الشيخ للبالغين</image:title>
+      <image:caption>حجز ريكسوس شرم الشيخ شامل كلياً فائق</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-rixos-seagate.jpg</image:loc>
+      <image:title>ريكسوس بريميوم سيجيت شرم الشيخ</image:title>
+      <image:caption>حجز ريكسوس سيجيت العائلي مع مدينة الألعاب المائية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-steigenberger-alcazar.jpg</image:loc>
+      <image:title>شتايجنبرجر ألكازار شرم الشيخ</image:title>
+      <image:caption>حجز شتايجنبرجر ألكازار خليج نبق 5 نجوم</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-whitehills.jpg</image:loc>
+      <image:title>منتجع وايت هيلز شرم الشيخ</image:title>
+      <image:caption>حجز وايت هيلز رأس نصراني VIP</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-sunrise-montemare.avif</image:loc>
+      <image:title>صن رايز مونتيماري جراند سيليكت شرم الشيخ</image:title>
+      <image:caption>حجز صن رايز مونتيماري هضبة أم السيد للبالغين</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-meraki-sharm.jpg</image:loc>
+      <image:title>منتجع ميراكي شرم الشيخ بوهو كلوبينج</image:title>
+      <image:caption>حجز منتجع ميراكي شرم الشيخ للبالغين 16+</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/cars/limousine/mercedes-maybach.png</image:loc>
+      <image:title>مرسيدس مايباخ ليموزين VIP مصر</image:title>
+      <image:caption>ليموزين مايباخ الفئة S وسائق خاص في مطار شرم الشيخ والقاهرة</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/cars/limousine/mercedes-s-class.png</image:loc>
+      <image:title>مرسيدس الفئة S ليموزين مصر</image:title>
+      <image:caption>تأجير ليموزين مرسيدس S-Class مع سائق خاص</image:caption>
+    </image:image>
+  </url>
+
+  <!-- English Homepage (International / Non-Arab Search Ranking) -->
+  <url>
+    <loc>https://www.tanhattourism.com/en/</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tanhattourism.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.tanhattourism.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tanhattourism.com/"/>
+    
+    <!-- English Key Assets for Google Images Ranking -->
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hero-bg.jpg</image:loc>
+      <image:title>Tanhat Tourism Egypt - 5-Star Hotel Booking &amp; Limousine</image:title>
+      <image:caption>Premier luxury travel agency in Sharm El Sheikh &amp; Egypt</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-fourseasons.webp</image:loc>
+      <image:title>Four Seasons Resort Sharm El Sheikh Booking</image:title>
+      <image:caption>Luxury 5-star palace resort booking in Sharm El Sheikh Egypt</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/hotel-rixos-sharm.jpg</image:loc>
+      <image:title>Rixos Sharm El Sheikh Adults Only Resort</image:title>
+      <image:caption>Ultra All-Inclusive luxury beach resort booking Sharm El Sheikh</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.tanhattourism.com/assets/images/cars/limousine/mercedes-maybach.png</image:loc>
+      <image:title>Mercedes Maybach VIP Airport Chauffeur Egypt</image:title>
+      <image:caption>Luxury VIP airport limousine transfer Sharm El Sheikh and Cairo</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

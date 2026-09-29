@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" width="180" height="40" fill="none">
+  <!-- Classic Four Seasons tree silhouette -->
+  <g fill="#1E293B">
+    <path d="M 90 2 C 86 5, 82 10, 86 14 C 84 14, 80 17, 85 20 C 83 21, 79 23, 86 26 L 89 26 L 89 31 L 91 31 L 91 26 L 94 26 C 101 23, 97 21, 95 20 C 100 17, 96 14, 94 14 C 98 10, 94 5, 90 2 Z" opacity="0.9" />
+  </g>
+  <text x="90" y="38" text-anchor="middle" font-family="'Cinzel', 'Times New Roman', serif" font-size="9" font-weight="700" fill="#1E293B" letter-spacing="2">FOUR SEASONS</text>
+</svg>
