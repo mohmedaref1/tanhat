@@ -99,30 +99,72 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Mobile Menu Toggle & Navigation Links
+  const siteHeader = document.getElementById('siteHeader');
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const navMenu = document.getElementById('navMenu');
   const navLinks = navMenu ? Array.from(navMenu.querySelectorAll('.nav-link')) : [];
   const brandLogo = document.querySelector('.header-brand');
 
+  function closeMobileMenu() {
+    if (navMenu && navMenu.classList.contains('open')) {
+      navMenu.classList.remove('open');
+      if (siteHeader) siteHeader.classList.remove('menu-open');
+      if (mobileMenuBtn) {
+        mobileMenuBtn.textContent = '☰';
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      }
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+  }
+
   if (mobileMenuBtn && navMenu) {
-    mobileMenuBtn.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-      const isOpen = navMenu.classList.contains('open');
+    mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navMenu.classList.toggle('open');
+      if (siteHeader) siteHeader.classList.toggle('menu-open', isOpen);
       mobileMenuBtn.textContent = isOpen ? '✕' : '☰';
       mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       document.body.style.overflow = isOpen ? 'hidden' : '';
       document.documentElement.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    // Close menu when a navigation link is clicked
+    // Close menu when a navigation link is clicked and smooth scroll
     navLinks.forEach((link) => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
-        mobileMenuBtn.textContent = '☰';
-        mobileMenuBtn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-        document.documentElement.style.overflow = '';
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        closeMobileMenu();
+        if (href && href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            requestAnimationFrame(() => {
+              target.scrollIntoView({ behavior: 'smooth' });
+            });
+          }
+        }
       });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMobileMenu();
+      }
+    });
+
+    // Close when tapping outside the header/menu
+    document.addEventListener('click', (e) => {
+      if (navMenu.classList.contains('open') && siteHeader && !siteHeader.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+
+    // Auto-close if resized to desktop viewport
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        closeMobileMenu();
+      }
     });
   }
 
@@ -150,7 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 2. Scroll Header, Logo Shrinking & Dynamic ScrollSpy (Section in View Detection)
-  const siteHeader = document.querySelector('.site-header');
 
   const sectionIds = ['hero', 'services', 'hotels', 'limousine', 'about', 'contact-booking'];
   const trackedSections = sectionIds
@@ -243,6 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleHeaderScroll() {
+    if (!siteHeader) return;
     const scrollY = window.scrollY || window.pageYOffset;
     if (scrollY > 40) {
       siteHeader.classList.add('scrolled');
@@ -690,40 +732,29 @@ document.addEventListener('DOMContentLoaded', () => {
   if (departInput) departInput.min = today;
   if (contactDateInput) contactDateInput.min = today;
 
-  // 8. Scroll-Triggered Load & Unload (Reveal & Exit) System
+  // 8. Scroll-Triggered Reveal System (Smooth Progressive Entrance)
   const animElements = document.querySelectorAll('[data-animate]');
   if (animElements.length > 0) {
     document.documentElement.classList.add('js-anim-ready');
 
-    const checkVisibility = () => {
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-      animElements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= windowHeight * 0.92 && rect.bottom >= 0) {
-          el.classList.add('is-visible');
-          el.classList.remove('is-unloaded');
-        } else {
-          // Unload when element leaves the viewport
-          el.classList.remove('is-visible');
-          el.classList.add('is-unloaded');
-        }
-      });
+    const revealEl = (el) => {
+      if (el) {
+        el.classList.add('is-visible');
+        el.classList.remove('is-unloaded');
+      }
     };
 
     if ('IntersectionObserver' in window) {
       const animObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            entry.target.classList.remove('is-unloaded');
-          } else {
-            entry.target.classList.remove('is-visible');
-            entry.target.classList.add('is-unloaded');
+            revealEl(entry.target);
+            animObserver.unobserve(entry.target);
           }
         });
       }, {
         threshold: 0.05,
-        rootMargin: '0px 0px -20px 0px'
+        rootMargin: '0px 0px 60px 0px'
       });
 
       animElements.forEach((el) => {
@@ -731,7 +762,19 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Immediate check on load and fast scroll events
+    const checkVisibility = () => {
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      animElements.forEach((el) => {
+        if (!el.classList.contains('is-visible')) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= windowHeight * 0.96 && rect.bottom >= 0) {
+            revealEl(el);
+          }
+        }
+      });
+    };
+
+    // Immediate check on load and scroll/resize events
     requestAnimationFrame(checkVisibility);
     window.addEventListener('scroll', checkVisibility, { passive: true });
     window.addEventListener('resize', checkVisibility, { passive: true });
@@ -899,9 +942,39 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    let currentDisplayedCarId = null;
+    let transitionTimerPhase1 = null;
+    let transitionTimerPhase2 = null;
+
+    // Reset visual state and cancel any in-flight transitions cleanly
+    function resetCarVisualState() {
+      if (transitionTimerPhase1) {
+        clearTimeout(transitionTimerPhase1);
+        transitionTimerPhase1 = null;
+      }
+      if (transitionTimerPhase2) {
+        clearTimeout(transitionTimerPhase2);
+        transitionTimerPhase2 = null;
+      }
+      isCarTransitioning = false;
+      if (fleetCarCanvas) {
+        fleetCarCanvas.classList.remove('car-drive-away', 'car-drive-prepare');
+      }
+      if (fleetCarShadow) {
+        fleetCarShadow.classList.remove('shadow-drive-away', 'shadow-drive-prepare');
+      }
+      if (fleetColInfo) {
+        fleetColInfo.style.opacity = '1';
+        fleetColInfo.style.transform = 'translateY(0)';
+      }
+      if (fleetColSpecs) {
+        fleetColSpecs.style.opacity = '1';
+        fleetColSpecs.style.transform = 'translateY(0)';
+      }
+    }
+
     // 3D Drive Transition: Previous car drives away left-down, new car arrives from right-depth
     function goToCar(index, animate = true) {
-      if (isCarTransitioning) return;
       const cars = fleetCarsData[currentFleetCategory];
       if (!cars || cars.length === 0) return;
 
@@ -909,30 +982,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (index >= cars.length) index = 0;
 
       const nextCar = cars[index];
+
+      // If already showing this exact vehicle and not currently transitioning, skip
+      if (currentDisplayedCarId === nextCar.id && !isCarTransitioning && fleetMainImg && fleetMainImg.getAttribute('src')) {
+        return;
+      }
+
+      // Always reset and cancel any in-flight transition to prevent stuck states
+      resetCarVisualState();
+
       currentCarIndex = index;
+      currentDisplayedCarId = nextCar.id;
 
       // Update counters
       if (fleetCounterCurr) fleetCounterCurr.textContent = String(index + 1).padStart(2, '0');
       if (fleetCounterTotal) fleetCounterTotal.textContent = String(cars.length).padStart(2, '0');
-
-      // Dynamic 3-color ambient lights shifting with the car
-      if (fleetShowcaseCard) {
-        const total = cars.length || 4;
-        const progress = index / Math.max(1, total - 1);
-        const shiftX1 = (progress - 0.5) * 130;
-        const shiftY1 = (index % 2 === 0 ? 18 : -18);
-        const shiftX2 = (0.5 - progress) * 90;
-        const shiftY2 = (index % 2 === 0 ? -15 : 15);
-        const shiftX3 = (progress - 0.5) * 85;
-        const shiftY3 = (index % 2 === 0 ? 15 : -15);
-
-        fleetShowcaseCard.style.setProperty('--glow-x1', `${shiftX1}px`);
-        fleetShowcaseCard.style.setProperty('--glow-y1', `${shiftY1}px`);
-        fleetShowcaseCard.style.setProperty('--glow-x2', `${shiftX2}px`);
-        fleetShowcaseCard.style.setProperty('--glow-y2', `${shiftY2}px`);
-        fleetShowcaseCard.style.setProperty('--glow-x3', `${shiftX3}px`);
-        fleetShowcaseCard.style.setProperty('--glow-y3', `${shiftY3}px`);
-      }
 
       if (!animate || !fleetCarCanvas || !fleetCarShadow) {
         if (fleetMainImg) {
@@ -958,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fleetColSpecs.style.transform = 'translateY(6px)';
       }
 
-      setTimeout(() => {
+      transitionTimerPhase1 = setTimeout(() => {
         // Swap image and content
         if (fleetMainImg) {
           fleetMainImg.src = resolveAssetPath(nextCar.img);
@@ -967,7 +1031,7 @@ document.addEventListener('DOMContentLoaded', () => {
         populateCarDetails(nextCar);
         updateActiveThumbnail();
 
-        // 2. Prepare new car at top / distance in 3D (instant, no transition)
+        // 2. Prepare new car at distance in 3D (instant, no transition)
         fleetCarCanvas.classList.remove('car-drive-away');
         fleetCarCanvas.classList.add('car-drive-prepare');
         fleetCarShadow.classList.remove('shadow-drive-away');
@@ -989,16 +1053,20 @@ document.addEventListener('DOMContentLoaded', () => {
           fleetColSpecs.style.transform = 'translateY(0)';
         }
 
-        setTimeout(() => {
+        transitionTimerPhase2 = setTimeout(() => {
           isCarTransitioning = false;
-        }, 460);
-      }, 230);
+          transitionTimerPhase2 = null;
+        }, 380);
+      }, 180);
     }
 
     // Category Switching
     function setFleetCategory(catName) {
       if (catName !== 'limousine' && catName !== 'rent') return;
       if (currentFleetCategory === catName) return;
+
+      // Cleanly cancel any ongoing transition before switching categories
+      resetCarVisualState();
 
       currentFleetCategory = catName;
       currentCarIndex = 0;
